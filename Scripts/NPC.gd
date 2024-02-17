@@ -5,9 +5,9 @@ func _ready():
 	print("Hello World")
 
 func _process(delta):
-#	print(find_child("UtilityAiAgent")._action_scores)
+	print(find_child("UtilityAiAgent")._action_scores)
 	_handle_hunger(delta)
-#	print(hunger)
+	print(hunger)
 
 func _handle_hunger(delta):
 	hunger = clampf(hunger + delta * 10, 0, 100)
