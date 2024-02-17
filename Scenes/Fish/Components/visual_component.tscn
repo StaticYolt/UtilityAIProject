@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwm5qnsjuc8wp"]
+
+[ext_resource type="Script" path="res://Scripts/Fish/Components/visual_component.gd" id="1_gbp8q"]
+
+[node name="VisualComponent" type="Node2D"]
+script = ExtResource("1_gbp8q")

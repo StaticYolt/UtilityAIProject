@@ -1,0 +1,102 @@
+[gd_scene load_steps=13 format=3 uid="uid://sf5gasrg5npr"]
+
+[ext_resource type="Script" path="res://Scripts/Fish/FishTypes/npc_fish1.gd" id="1_t1goa"]
+[ext_resource type="Script" path="res://Scripts/Fish/Components/visual_component.gd" id="2_5ndma"]
+[ext_resource type="Texture2D" uid="uid://gkikq1eebuha" path="res://SpearFishing Assets Pack/Sprites/Fish1 - 16x16/Orange.png" id="3_m58q4"]
+[ext_resource type="Script" path="res://Scripts/Fish/Components/health_component.gd" id="4_3eon5"]
+[ext_resource type="Script" path="res://Scripts/Fish/Components/hitbox_component.gd" id="5_40lf6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u8dbb"]
+size = Vector2(16, 14)
+
+[sub_resource type="Animation" id="Animation_ct4fn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VisualComponent/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_6c8am"]
+resource_name = "swim"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VisualComponent/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5jdne"]
+_data = {
+"RESET": SubResource("Animation_ct4fn"),
+"swim": SubResource("Animation_6c8am")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ygj73"]
+animation = &"swim"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ibnph"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_rje6r"]
+states/swim/node = SubResource("AnimationNodeAnimation_ygj73")
+states/swim/position = Vector2(370.5, 98.75)
+transitions = ["Start", "swim", SubResource("AnimationNodeStateMachineTransition_ibnph")]
+
+[node name="npc_fish1" type="CharacterBody2D" node_paths=PackedStringArray("hitbox_component", "health_component", "visual_component")]
+motion_mode = 1
+script = ExtResource("1_t1goa")
+hitbox_component = NodePath("HitBoxComponent")
+health_component = NodePath("HealthComponent")
+visual_component = NodePath("VisualComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_u8dbb")
+
+[node name="VisualComponent" type="Node2D" parent="." node_paths=PackedStringArray("sprite", "animation_player", "animation_tree")]
+script = ExtResource("2_5ndma")
+sprite = NodePath("Sprite2D")
+animation_player = NodePath("AnimationPlayer")
+animation_tree = NodePath("AnimationTree")
+
+[node name="Sprite2D" type="Sprite2D" parent="VisualComponent"]
+position = Vector2(2.08165e-12, 2.08165e-12)
+texture = ExtResource("3_m58q4")
+hframes = 8
+vframes = 4
+frame = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VisualComponent"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_5jdne")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="VisualComponent"]
+tree_root = SubResource("AnimationNodeStateMachine_rje6r")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+
+[node name="HealthComponent" type="Node2D" parent="."]
+script = ExtResource("4_3eon5")
+max_health = 10
+
+[node name="HitBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("collision_shape", "health_component")]
+script = ExtResource("5_40lf6")
+collision_shape = NodePath("../CollisionShape2D")
+health_component = NodePath("../HealthComponent")

@@ -1,17 +1,15 @@
 [gd_scene load_steps=6 format=3 uid="uid://cr8smux4kmmsa"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_l05gp"]
-[ext_resource type="PackedScene" uid="uid://bhcs68ruaokbn" path="res://Scenes/initial_fish.tscn" id="2_x8dcd"]
 [ext_resource type="Script" path="res://Scripts/main_camera.gd" id="4_1nmsv"]
+[ext_resource type="PackedScene" uid="uid://dkrnno34mdesj" path="res://Scenes/Fish/player_fish.tscn" id="4_arln1"]
 [ext_resource type="PackedScene" uid="uid://ctj3d46k1o7r" path="res://Scenes/background.tscn" id="4_bylhu"]
-[ext_resource type="PackedScene" uid="uid://dxoaq2x7xxdbl" path="res://Scenes/player.tscn" id="5_utvui"]
+[ext_resource type="PackedScene" uid="uid://bwqf4vxhwwup7" path="res://Scenes/Fish/krill.tscn" id="5_6vmr4"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_l05gp")
 
-[node name="Initial Fish" parent="." instance=ExtResource("2_x8dcd")]
-
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="MainCamera" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
 script = ExtResource("4_1nmsv")
 step = 5.0
@@ -19,5 +17,8 @@ step = 5.0
 [node name="Background" parent="." instance=ExtResource("4_bylhu")]
 position = Vector2(2.08165e-12, -80)
 
-[node name="Player" parent="." instance=ExtResource("5_utvui")]
-position = Vector2(128, -49)
+[node name="player_fish" parent="." instance=ExtResource("4_arln1")]
+
+[node name="Krill" parent="." instance=ExtResource("5_6vmr4")]
+position = Vector2(111, -51)
+move_speed = 2.0

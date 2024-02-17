@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://bwqf4vxhwwup7"]
+
+[ext_resource type="Script" path="res://Scripts/Fish/FishTypes/krill.gd" id="1_ofcb2"]
+[ext_resource type="PackedScene" uid="uid://bxbbvihgl0ouh" path="res://Scenes/Fish/Components/hitbox_component.tscn" id="2_w32wm"]
+[ext_resource type="PackedScene" uid="uid://bfb0585vkiwpy" path="res://Scenes/Fish/Components/health_component.tscn" id="3_ymhkp"]
+[ext_resource type="PackedScene" uid="uid://bwm5qnsjuc8wp" path="res://Scenes/Fish/Components/visual_component.tscn" id="4_684gg"]
+[ext_resource type="Texture2D" uid="uid://cgwx8bbae00kb" path="res://SpearFishing Assets Pack/Sprites/JellyFish - 32x16/JellyFish.png" id="5_btx8m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ppvy7"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_2tgqx"]
+
+[node name="Krill" type="CharacterBody2D" node_paths=PackedStringArray("hitbox_component", "health_component", "visual_component")]
+script = ExtResource("1_ofcb2")
+eaten_calories = 4.0
+hitbox_component = NodePath("HitboxComponent")
+health_component = NodePath("HealthComponent")
+visual_component = NodePath("VisualComponent")
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("collision_shape", "health_component") instance=ExtResource("2_w32wm")]
+collision_shape = NodePath("../CollisionShape2D")
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ppvy7")
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_ymhkp")]
+
+[node name="VisualComponent" parent="." node_paths=PackedStringArray("sprite", "animation_player", "animation_tree") instance=ExtResource("4_684gg")]
+sprite = NodePath("Sprite2D")
+animation_player = NodePath("AnimationPlayer")
+animation_tree = NodePath("AnimationTree")
+
+[node name="Sprite2D" type="Sprite2D" parent="VisualComponent"]
+texture = ExtResource("5_btx8m")
+hframes = 4
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="VisualComponent"]
+
+[node name="AnimationTree" type="AnimationTree" parent="VisualComponent"]
+tree_root = SubResource("AnimationNodeStateMachine_2tgqx")
+anim_player = NodePath("../AnimationPlayer")
