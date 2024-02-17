@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=3 uid="uid://b8tjvkj70p73f"]
+
+[ext_resource type="Script" path="res://Scripts/NPC.gd" id="1_rocux"]
+[ext_resource type="Script" path="res://addons/utility_ai/agent/agent.gd" id="2_e3srn"]
+[ext_resource type="Script" path="res://addons/utility_ai/actions/action.gd" id="3_o1ke6"]
+[ext_resource type="Script" path="res://addons/utility_ai/considerations/consideration.gd" id="4_batql"]
+[ext_resource type="Script" path="res://addons/utility_ai/considerations/consideration_from_node.gd" id="5_bbpnd"]
+
+[sub_resource type="Curve" id="Curve_yokh3"]
+_data = [Vector2(0, 0.198247), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="Curve" id="Curve_ncy3n"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.512169, 0.171778), 0.0, 0.0, 0, 0, Vector2(0.994042, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="NPC" type="Node2D"]
+script = ExtResource("1_rocux")
+
+[node name="UtilityAiAgent" type="Node" parent="."]
+script = ExtResource("2_e3srn")
+
+[node name="idle" type="Node" parent="UtilityAiAgent"]
+script = ExtResource("3_o1ke6")
+_action_id = "idle"
+
+[node name="UtilityAiConsideration" type="Node" parent="UtilityAiAgent/idle"]
+script = ExtResource("4_batql")
+curve = SubResource("Curve_yokh3")
+
+[node name="Eat" type="Node" parent="UtilityAiAgent"]
+script = ExtResource("3_o1ke6")
+_action_id = "eat"
+
+[node name="UtilityAiConsiderationFromNode" type="Node" parent="UtilityAiAgent/Eat" node_paths=PackedStringArray("node")]
+script = ExtResource("5_bbpnd")
+node = NodePath("../../..")
+property_name = "hunger"
+max_value = 100.0
+curve = SubResource("Curve_ncy3n")
+
+[connection signal="top_score_action_changed" from="UtilityAiAgent" to="." method="_on_utility_ai_agent_top_score_action_changed"]
