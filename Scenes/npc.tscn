@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://b8tjvkj70p73f"]
 
-[ext_resource type="Script" path="res://Scripts/NPC.gd" id="1_rocux"]
-[ext_resource type="Script" path="res://addons/utility_ai/agent/agent.gd" id="2_e3srn"]
-[ext_resource type="Script" path="res://addons/utility_ai/actions/action.gd" id="3_o1ke6"]
-[ext_resource type="Script" path="res://addons/utility_ai/considerations/consideration.gd" id="4_batql"]
-[ext_resource type="Script" path="res://addons/utility_ai/considerations/consideration_from_node.gd" id="5_bbpnd"]
+[ext_resource type="Script" path="res://Scripts/NPC.gd" id="1_k51t0"]
+[ext_resource type="Script" path="res://addons/utility_ai/agent/agent.gd" id="2_0sexi"]
+[ext_resource type="Script" path="res://addons/utility_ai/actions/action.gd" id="3_bst00"]
+[ext_resource type="Script" path="res://addons/utility_ai/considerations/consideration.gd" id="4_dgd1p"]
+[ext_resource type="Script" path="res://addons/utility_ai/considerations/consideration_from_node.gd" id="5_cc2m2"]
 
 [sub_resource type="Curve" id="Curve_yokh3"]
 _data = [Vector2(0, 0.198247), 0.0, 0.0, 0, 0]
@@ -15,25 +15,25 @@ _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.512169, 0.171778), 0.0, 0.0, 0
 point_count = 3
 
 [node name="NPC" type="Node2D"]
-script = ExtResource("1_rocux")
+script = ExtResource("1_k51t0")
 
 [node name="UtilityAiAgent" type="Node" parent="."]
-script = ExtResource("2_e3srn")
+script = ExtResource("2_0sexi")
 
 [node name="idle" type="Node" parent="UtilityAiAgent"]
-script = ExtResource("3_o1ke6")
+script = ExtResource("3_bst00")
 _action_id = "idle"
 
 [node name="UtilityAiConsideration" type="Node" parent="UtilityAiAgent/idle"]
-script = ExtResource("4_batql")
+script = ExtResource("4_dgd1p")
 curve = SubResource("Curve_yokh3")
 
 [node name="Eat" type="Node" parent="UtilityAiAgent"]
-script = ExtResource("3_o1ke6")
+script = ExtResource("3_bst00")
 _action_id = "eat"
 
 [node name="UtilityAiConsiderationFromNode" type="Node" parent="UtilityAiAgent/Eat" node_paths=PackedStringArray("node")]
-script = ExtResource("5_bbpnd")
+script = ExtResource("5_cc2m2")
 node = NodePath("../../..")
 property_name = "hunger"
 max_value = 100.0
