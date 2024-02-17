@@ -20,3 +20,4 @@ step = 5.0
 position = Vector2(2.08165e-12, -80)
 
 [node name="Player" parent="." instance=ExtResource("5_utvui")]
+position = Vector2(128, -49)
