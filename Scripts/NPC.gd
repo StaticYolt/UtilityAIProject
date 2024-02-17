@@ -1,8 +1,9 @@
 extends Node2D
 
 @export var hunger = 0
-#func _ready():
-#	print("Hello World")
+func _ready():
+	print("Hello World")
+
 func _process(delta):
 #	print(find_child("UtilityAiAgent")._action_scores)
 	_handle_hunger(delta)
