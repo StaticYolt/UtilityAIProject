@@ -1,33 +1,75 @@
 extends Entity
+class_name BaseNPCFish
 var goal_position : Vector2
 @export var move_area : Area2D
+@export var sensory_component : Area2D
+@export var modulate_color : Color
 var last_position : Vector2
 var initial_position : Vector2
-var move_direction
+var move_direction : Vector2
 var offset : float
+
+enum fish_states {WANDER = 1, CHASE = 2}
+
+var curr_state = fish_states.WANDER
+
 func _ready():
 	position = initial_position
 	goal_position = _generate_goal_vectorv2()
+	_to_idle()
 #	GameInputManager.connect("onUpArrowPressed", _generate_goal_vector)
 func _process(delta):
+#	print(hitbox_component.collision_shape.disabled)
+	hunger = abs(100 - health_component.health)
+#	print(find_child("UtilityAiAgent")._action_scores)
 #	print(velocity)
 #	print(health_component.health)
 #	print(goal_position)
-	_move()
+	match curr_state:
+		fish_states.WANDER:
+			_wander()
+		fish_states.CHASE:
+			_chase()
 	move_and_slide()
-func _move():
+func _wander():
 	move_direction = (goal_position - position).normalized()
 	if position.distance_to(goal_position) > 3:
 		velocity = move_direction * move_speed
 	else:
 		goal_position = _generate_goal_vectorv2()
 		move_direction = (goal_position - position).normalized()
-		if move_direction.x < 0:
-			visual_component.sprite.flip_h = true
-		else:
-			visual_component.sprite.flip_h = false
-	
+		_update_sprite_dir(move_direction.x < 0)
 
+var target : Entity
+func _chase():
+	if is_instance_valid(target):
+		move_direction = (target.position - position).normalized()
+		if position.distance_to(target.position) > 3:
+			velocity = move_direction * move_speed
+		_update_sprite_dir(move_direction.x < 0)
+	else:
+		_find_target()
+		move_direction = (goal_position- position).normalized()
+		if position.distance_to(goal_position) > 3:
+			velocity = move_direction * move_speed
+			_update_sprite_dir(move_direction.x < 0)
+		else:
+			goal_position = _generate_goal_vectorv2()
+			move_direction = (goal_position - position).normalized()
+			_update_sprite_dir(move_direction.x < 0)
+
+func _find_target():
+	var targets = sensory_component.get_overlapping_areas()
+	if targets:
+		var valid_targets_distances : Array
+		var valid_targets : Array
+		for element in targets:
+			if element.get_parent() is Krill:
+				valid_targets_distances.append(int(position.distance_to(element.get_parent().position)))
+				valid_targets.append(element.get_parent())
+		if valid_targets and valid_targets_distances:
+			target = valid_targets[valid_targets_distances.find(valid_targets_distances.min())]
+		
 func _generate_goal_vectorv2() -> Vector2:
 	var c : CollisionPolygon2D
 	var c2 : CollisionShape2D
@@ -42,11 +84,25 @@ func _on_timer_timeout():
 	if abs(last_position.x - position.x) < 5 && abs(last_position.y - position.y) < 5:
 		goal_position = _generate_goal_vectorv2()
 	last_position = position
-	if move_direction.x < 0:
-		visual_component.sprite.flip_h = true
-	else:
-		visual_component.sprite.flip_h = false
+	_update_sprite_dir(move_direction.x < 0)
 
 func _on_health_component_on_death(entity):
-	print("Dedge")
-	queue_free()
+	visual_component.animation_tree.get("parameters/playback").travel("death")
+
+func _update_sprite_dir(condition):
+	visual_component.sprite.flip_h = condition
+
+func _to_idle():
+	curr_state = fish_states.WANDER
+	hitbox_component.collision_shape.disabled = true
+func _to_chase():
+	curr_state = fish_states.CHASE
+	hitbox_component.collision_shape.disabled = false
+func _on_utility_ai_agent_top_score_action_changed(top_action_id):
+#	print("Action changed: %s" % top_action_id)
+
+	match top_action_id:
+		"idle":
+			_to_idle()
+		"eat":
+			_to_chase()

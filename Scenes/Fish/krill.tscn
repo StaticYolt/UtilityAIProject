@@ -6,22 +6,27 @@
 [ext_resource type="PackedScene" uid="uid://bwm5qnsjuc8wp" path="res://Scenes/Fish/Components/visual_component.tscn" id="4_684gg"]
 [ext_resource type="Texture2D" uid="uid://cgwx8bbae00kb" path="res://SpearFishing Assets Pack/Sprites/JellyFish - 32x16/JellyFish.png" id="5_btx8m"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ppvy7"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lr06d"]
+size = Vector2(20, 13)
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_2tgqx"]
 
 [node name="Krill" type="CharacterBody2D" node_paths=PackedStringArray("hitbox_component", "health_component", "visual_component")]
+rotation = 4.71239
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_ofcb2")
+calories = 20.0
 hitbox_component = NodePath("HitboxComponent")
 health_component = NodePath("HealthComponent")
 visual_component = NodePath("VisualComponent")
 
 [node name="HitboxComponent" parent="." node_paths=PackedStringArray("collision_shape", "health_component") instance=ExtResource("2_w32wm")]
-collision_shape = NodePath("../CollisionShape2D")
+collision_shape = NodePath("CollisionShape2D")
 health_component = NodePath("../HealthComponent")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_ppvy7")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_lr06d")
 
 [node name="HealthComponent" parent="." instance=ExtResource("3_ymhkp")]
 
@@ -40,3 +45,9 @@ vframes = 2
 [node name="AnimationTree" type="AnimationTree" parent="VisualComponent"]
 tree_root = SubResource("AnimationNodeStateMachine_2tgqx")
 anim_player = NodePath("../AnimationPlayer")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_lr06d")
+
+[connection signal="area_shape_entered" from="HitboxComponent" to="." method="_on_hitbox_component_area_shape_entered"]

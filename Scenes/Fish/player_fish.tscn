@@ -62,6 +62,7 @@ size = Vector2(16, 14)
 motion_mode = 1
 script = ExtResource("1_hwbkm")
 move_speed = 2.0
+energy = null
 hitbox_component = NodePath("HitBoxComponent")
 health_component = NodePath("HealthComponent")
 visual_component = NodePath("VisualComponent")

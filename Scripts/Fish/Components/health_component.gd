@@ -3,12 +3,13 @@ class_name HealthComponent
 signal on_death(entity:Entity)
 signal on_damage()
 @export var max_health : int
-var health : float
+var health : float = max_health
 
 func _process(delta):
+
 	if health <= 0:
 		_death()
-	health -= .001
+	health -= .05
 func _ready():
 	health = max_health
 func _damage(attack:Attack):

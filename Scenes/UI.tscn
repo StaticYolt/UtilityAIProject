@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6yukjetrdrfj"]
+
+[ext_resource type="Script" path="res://Scripts/UI/BackgroundUI.gd" id="1_8tlry"]
+[ext_resource type="Texture2D" uid="uid://85rbl1cnna" path="res://underwater-diving-files/PNG/environment/background.png" id="1_videj"]
+[ext_resource type="Texture2D" uid="uid://dl8vfpexvimra" path="res://underwater-diving-files/PNG/environment/midground.png" id="2_qq0p0"]
+[ext_resource type="Script" path="res://Scripts/UI/parallax.gd" id="3_1b57r"]
+
+[node name="UI" type="Control"]
+z_index = -1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8tlry")
+
+[node name="WaterBackground" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_videj")
+
+[node name="MidGround" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_qq0p0")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Background" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1146, 2.08165e-12)
+script = ExtResource("3_1b57r")
+scroll_speed = 20.0
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Background"]
+position = Vector2(572.5, 316.5)
+scale = Vector2(3.99653, 2.55859)
+texture = ExtResource("1_videj")
+
+[node name="Midground" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(482, 262)
+motion_mirroring = Vector2(1140, 2.08165e-12)
+script = ExtResource("3_1b57r")
+scroll_speed = 10.0
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Midground"]
+position = Vector2(91.5, 53.5)
+scale = Vector2(1.19271, 1.27148)
+texture = ExtResource("2_qq0p0")

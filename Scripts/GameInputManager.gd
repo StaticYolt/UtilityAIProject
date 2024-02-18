@@ -8,6 +8,8 @@ signal onUpArrowPressed()
 signal onDownArrowPressed()
 signal onRightArrowPressed()
 signal onLeftArrowPressed()
+signal onScrollUp()
+signal onScrollDown()
 
 func _process(delta):
 	if Input.is_action_pressed("up"):
@@ -28,3 +30,7 @@ func _process(delta):
 		onRightArrowPressed.emit()
 	if Input.is_action_just_pressed("space"):
 		onSpacePressed.emit()
+	if Input.is_action_just_pressed("scroll_up"):
+		onScrollUp.emit()
+	if Input.is_action_just_pressed("scroll_down"):
+		onScrollDown.emit()

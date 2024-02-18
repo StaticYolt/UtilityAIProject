@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://boo1xhy0faw1w"]
+
+[ext_resource type="Script" path="res://Scripts/Fish/Components/sensory_component.gd" id="1_khpjh"]
+
+[node name="SensoryComponent" type="Area2D"]
+script = ExtResource("1_khpjh")
