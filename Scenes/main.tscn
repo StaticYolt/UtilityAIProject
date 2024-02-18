@@ -90,6 +90,7 @@ grow_vertical = 2
 [node name="PurpleFish" type="Button" parent="UI/ButtonControl/HBoxContainer"]
 custom_minimum_size = Vector2(120, 2.08165e-12)
 layout_mode = 2
+focus_mode = 0
 icon = ExtResource("11_3062g")
 icon_alignment = 1
 expand_icon = true
@@ -97,6 +98,7 @@ expand_icon = true
 [node name="RedFish" type="Button" parent="UI/ButtonControl/HBoxContainer"]
 custom_minimum_size = Vector2(120, 2.08165e-12)
 layout_mode = 2
+focus_mode = 0
 icon = ExtResource("12_58unb")
 icon_alignment = 1
 expand_icon = true
@@ -104,6 +106,7 @@ expand_icon = true
 [node name="YellowFish" type="Button" parent="UI/ButtonControl/HBoxContainer"]
 custom_minimum_size = Vector2(120, 2.08165e-12)
 layout_mode = 2
+focus_mode = 0
 icon = ExtResource("13_r881d")
 icon_alignment = 1
 expand_icon = true

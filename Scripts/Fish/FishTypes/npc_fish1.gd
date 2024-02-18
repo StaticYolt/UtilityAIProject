@@ -4,16 +4,18 @@ var goal_position : Vector2
 @export var move_area : Area2D
 @export var sensory_component : Area2D
 @export var modulate_color : Color
+@export var collider2D : CollisionShape2D
 var last_position : Vector2
 var initial_position : Vector2
 var move_direction : Vector2
 var offset : float
-
+var max_move_speed : float
 enum fish_states {WANDER = 1, CHASE = 2}
 
 var curr_state = fish_states.WANDER
 
 func _ready():
+	max_move_speed = move_speed
 	position = initial_position
 	goal_position = _generate_goal_vectorv2()
 	_to_idle()
@@ -46,6 +48,7 @@ func _chase():
 		move_direction = (target.position - position).normalized()
 		if position.distance_to(target.position) > 3:
 			velocity = move_direction * move_speed
+			print("chasing")
 		_update_sprite_dir(move_direction.x < 0)
 	else:
 		_find_target()
@@ -94,10 +97,14 @@ func _update_sprite_dir(condition):
 
 func _to_idle():
 	curr_state = fish_states.WANDER
+	collider2D.disabled = true
 	hitbox_component.collision_shape.disabled = true
+	move_speed = max_move_speed
 func _to_chase():
 	curr_state = fish_states.CHASE
+	move_speed = max_move_speed + 20
 	hitbox_component.collision_shape.disabled = false
+	collider2D.disabled = false
 func _on_utility_ai_agent_top_score_action_changed(top_action_id):
 #	print("Action changed: %s" % top_action_id)
 

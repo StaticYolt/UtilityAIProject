@@ -34,6 +34,7 @@ transitions = ["Start", "swim", SubResource("AnimationNodeStateMachineTransition
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_a66dw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3mq3y"]
+radius = 12.0046
 
 [sub_resource type="Curve" id="Curve_y78to"]
 _data = [Vector2(0.12521, 0.198247), 0.0, 0.0, 0, 0]
@@ -84,9 +85,10 @@ orbit_velocity_max = 0.0
 scale_min = 2.0
 scale_max = 2.0
 
-[node name="var1_npc_fish" type="CharacterBody2D" node_paths=PackedStringArray("sensory_component", "hitbox_component", "health_component", "visual_component")]
+[node name="var1_npc_fish" type="CharacterBody2D" node_paths=PackedStringArray("sensory_component", "collider2D", "hitbox_component", "health_component", "visual_component")]
 script = ExtResource("1_ygpag")
 sensory_component = NodePath("SensoryComponent")
+collider2D = NodePath("CollisionShape2D")
 hitbox_component = NodePath("HitBoxComponent")
 health_component = NodePath("HealthComponent")
 visual_component = NodePath("VisualComponent")
@@ -155,8 +157,9 @@ curve = SubResource("Curve_y78to")
 script = ExtResource("8_ol2ly")
 _action_id = "eat"
 
-[node name="Hunger" type="Node" parent="UtilityAiAgent/Eat"]
+[node name="Hunger" type="Node" parent="UtilityAiAgent/Eat" node_paths=PackedStringArray("node")]
 script = ExtResource("10_w4ve6")
+node = NodePath("../../..")
 property_name = "hunger"
 max_value = 100.0
 curve = SubResource("Curve_fw4d5")
@@ -173,3 +176,4 @@ randomness = 0.6
 
 [connection signal="on_death" from="HealthComponent" to="." method="_on_health_component_on_death"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="top_score_action_changed" from="UtilityAiAgent" to="." method="_on_utility_ai_agent_top_score_action_changed"]

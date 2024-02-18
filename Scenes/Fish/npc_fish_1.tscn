@@ -34,6 +34,7 @@ transitions = ["Start", "swim", SubResource("AnimationNodeStateMachineTransition
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_a66dw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_t23l0"]
+radius = 13.0
 
 [sub_resource type="Curve" id="Curve_j88uk"]
 _data = [Vector2(0.12521, 0.198247), 0.0, 0.0, 0, 0]
@@ -84,11 +85,12 @@ orbit_velocity_max = 0.0
 scale_min = 2.0
 scale_max = 2.0
 
-[node name="npc_fish1" type="CharacterBody2D" node_paths=PackedStringArray("sensory_component", "hitbox_component", "health_component", "visual_component")]
+[node name="npc_fish1" type="CharacterBody2D" node_paths=PackedStringArray("sensory_component", "collider2D", "hitbox_component", "health_component", "visual_component")]
 motion_mode = 1
 script = ExtResource("1_t1goa")
 sensory_component = NodePath("SensoryComponent")
 modulate_color = Color(1, 1, 1, 1)
+collider2D = NodePath("CollisionShape2D")
 hitbox_component = NodePath("HitBoxComponent")
 health_component = NodePath("HealthComponent")
 visual_component = NodePath("VisualComponent")
@@ -125,7 +127,7 @@ max_health = 100
 
 [node name="HitBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("collision_shape", "health_component")]
 script = ExtResource("5_40lf6")
-collision_shape = NodePath("../CollisionShape2D")
+collision_shape = NodePath("CollisionShape2D2")
 health_component = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="HitBoxComponent"]
