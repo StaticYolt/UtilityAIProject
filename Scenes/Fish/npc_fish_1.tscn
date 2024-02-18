@@ -168,7 +168,6 @@ curve = SubResource("Curve_3gm2f")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 position = Vector2(-7, -5)
-emitting = false
 amount = 150
 process_material = SubResource("ParticleProcessMaterial_htar1")
 lifetime = 0.4
