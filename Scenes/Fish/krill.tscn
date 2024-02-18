@@ -12,7 +12,6 @@
 
 [node name="Krill" type="CharacterBody2D" node_paths=PackedStringArray("hitbox_component", "health_component", "visual_component")]
 script = ExtResource("1_ofcb2")
-eaten_calories = 4.0
 hitbox_component = NodePath("HitboxComponent")
 health_component = NodePath("HealthComponent")
 visual_component = NodePath("VisualComponent")
