@@ -79,7 +79,7 @@ position = Vector2(2.08165e-12, 2.08165e-12)
 texture = ExtResource("3_m58q4")
 hframes = 8
 vframes = 4
-frame = 1
+frame = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="VisualComponent"]
 root_node = NodePath("../..")
@@ -94,7 +94,7 @@ active = true
 
 [node name="HealthComponent" type="Node2D" parent="."]
 script = ExtResource("4_3eon5")
-max_health = 10
+max_health = 100
 
 [node name="HitBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("collision_shape", "health_component")]
 script = ExtResource("5_40lf6")
@@ -104,4 +104,5 @@ health_component = NodePath("../HealthComponent")
 [node name="Timer" type="Timer" parent="."]
 autostart = true
 
+[connection signal="on_death" from="HealthComponent" to="." method="_on_health_component_on_death"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
