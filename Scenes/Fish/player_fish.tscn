@@ -61,10 +61,7 @@ size = Vector2(16, 14)
 [node name="player_fish" type="CharacterBody2D" node_paths=PackedStringArray("hitbox_component", "health_component", "visual_component")]
 motion_mode = 1
 script = ExtResource("1_hwbkm")
-eaten_calories = null
 move_speed = 2.0
-power_level = null
-fear = null
 hitbox_component = NodePath("HitBoxComponent")
 health_component = NodePath("HealthComponent")
 visual_component = NodePath("VisualComponent")
