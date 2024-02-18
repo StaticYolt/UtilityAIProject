@@ -5,8 +5,11 @@ extends Entity
 var targetPosition = Vector2()
 var left_last_pressed : bool
 func _process(delta):
-	velocity.y += gravity * delta
-
+	if velocity.y < gravity:
+		velocity.y += gravity * delta
+#	print(velocity)
+#	print(hitbox_component.get_overlapping_bodies())
+#	print(hitbox_component.get_overlapping_areas())
 	visual_component.sprite.flip_h = left_last_pressed
 	move_and_slide()
 	

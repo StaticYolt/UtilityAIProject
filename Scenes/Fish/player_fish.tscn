@@ -6,9 +6,6 @@
 [ext_resource type="Script" path="res://Scripts/Fish/Components/health_component.gd" id="4_y0gv6"]
 [ext_resource type="Script" path="res://Scripts/Fish/Components/hitbox_component.gd" id="5_7li5o"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ich6e"]
-size = Vector2(16, 14)
-
 [sub_resource type="Animation" id="Animation_ct4fn"]
 length = 0.001
 tracks/0/type = "value"
@@ -58,16 +55,19 @@ states/swim/node = SubResource("AnimationNodeAnimation_ygj73")
 states/swim/position = Vector2(370.5, 98.75)
 transitions = ["Start", "swim", SubResource("AnimationNodeStateMachineTransition_ibnph")]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ich6e"]
+size = Vector2(16, 14)
+
 [node name="player_fish" type="CharacterBody2D" node_paths=PackedStringArray("hitbox_component", "health_component", "visual_component")]
 motion_mode = 1
 script = ExtResource("1_hwbkm")
+eaten_calories = null
 move_speed = 2.0
+power_level = null
+fear = null
 hitbox_component = NodePath("HitBoxComponent")
 health_component = NodePath("HealthComponent")
 visual_component = NodePath("VisualComponent")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_ich6e")
 
 [node name="VisualComponent" type="Node2D" parent="." node_paths=PackedStringArray("sprite", "animation_player", "animation_tree")]
 script = ExtResource("3_n13ca")
@@ -98,5 +98,11 @@ max_health = 10
 
 [node name="HitBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("collision_shape", "health_component")]
 script = ExtResource("5_7li5o")
-collision_shape = NodePath("../CollisionShape2D")
+collision_shape = NodePath("CollisionShape2D")
 health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
+shape = SubResource("RectangleShape2D_ich6e")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ich6e")

@@ -1,13 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://cr8smux4kmmsa"]
+[gd_scene load_steps=8 format=3 uid="uid://cr8smux4kmmsa"]
 
 [ext_resource type="Script" path="res://Scripts/main.gd" id="1_l05gp"]
 [ext_resource type="Script" path="res://Scripts/main_camera.gd" id="4_1nmsv"]
 [ext_resource type="PackedScene" uid="uid://dkrnno34mdesj" path="res://Scenes/Fish/player_fish.tscn" id="4_arln1"]
 [ext_resource type="PackedScene" uid="uid://ctj3d46k1o7r" path="res://Scenes/background.tscn" id="4_bylhu"]
 [ext_resource type="PackedScene" uid="uid://bwqf4vxhwwup7" path="res://Scenes/Fish/krill.tscn" id="5_6vmr4"]
+[ext_resource type="PackedScene" uid="uid://sf5gasrg5npr" path="res://Scenes/Fish/npc_fish_1.tscn" id="6_a677r"]
 
-[node name="Main" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5eg53"]
+size = Vector2(666, 322)
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("npc_move_area")]
 script = ExtResource("1_l05gp")
+npc_move_area = NodePath("npcMoveArea")
 
 [node name="MainCamera" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
@@ -22,3 +27,16 @@ position = Vector2(2.08165e-12, -80)
 [node name="Krill" parent="." instance=ExtResource("5_6vmr4")]
 position = Vector2(111, -51)
 move_speed = 2.0
+
+[node name="npcMoveArea" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="npcMoveArea"]
+polygon = PackedVector2Array(-335, -238, -322, -238, -321, -192, -305, -192, -304, -175, -289, -175, -289, -160, -274, -160, -274, -128, -259, -128, -256, -48, -242, -48, -241, -31, -225, -31, -224, 48, -209, 48, -209, 80, 273, 81, 273, -32, 288, -32, 288, -128, 303, -128, 305, -207, 321, -208, 321, -238)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="npcMoveArea"]
+position = Vector2(11, -77)
+shape = SubResource("RectangleShape2D_5eg53")
+
+[node name="npc_fish1" parent="." node_paths=PackedStringArray("move_area") instance=ExtResource("6_a677r")]
+move_area = NodePath("../npcMoveArea")
+move_speed = 50.0
